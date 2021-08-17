@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 abstract class AppColors {
   static Color get white => Colors.white;
-  static Color get black => Color(0xFF006CFF);
+  static Color get black => Colors.black;
+  static Color get blue => Color(0xFF006CFF);
   static Color get purple => Color(0xFFB678FF);
   static Color get yellow => Color(0xFFFFE761);
   static Color get red => Color(0xFFF45E6D);
