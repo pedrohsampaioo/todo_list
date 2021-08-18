@@ -35,7 +35,7 @@ class CategoryWidgeet extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style:
-                Theme.of(context).textTheme.headline6!.apply(color: titleColor),
+                Theme.of(context).textTheme.headline4!.apply(color: titleColor),
           ),
           const SizedBox(height: 4),
           Text(
