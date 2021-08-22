@@ -47,6 +47,20 @@ class CategoryTheme {
         );
     }
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is CategoryTheme &&
+        other.backgroundColor == backgroundColor &&
+        other.titleColor == titleColor &&
+        other.subtitleColor == subtitleColor;
+  }
+
+  @override
+  int get hashCode =>
+      backgroundColor.hashCode ^ titleColor.hashCode ^ subtitleColor.hashCode;
 }
 
 enum CategoryThemeVariations {

@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
+import 'package:todo_list/app/config/categories/category_theme.dart';
+
 class CategoryWidgeet extends StatelessWidget {
   final Color backgroundColor;
   final Color titleColor;
   final Color subtitleColor;
   final String title;
   final int tasksAmount;
+  final CategoryTheme variation;
 
   const CategoryWidgeet({
     Key? key,
     required this.backgroundColor,
+    required this.variation,
     required this.titleColor,
     required this.subtitleColor,
     required this.title,
@@ -26,7 +30,7 @@ class CategoryWidgeet extends StatelessWidget {
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
