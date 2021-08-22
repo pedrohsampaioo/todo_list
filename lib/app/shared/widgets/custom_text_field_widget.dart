@@ -8,6 +8,7 @@ class CustomTextFieldWidget extends StatelessWidget {
   final FocusNode? focusNode;
   final String? placeholder;
   final TextCapitalization? textCapitalization;
+  final bool autofocus;
 
   const CustomTextFieldWidget({
     Key? key,
@@ -15,11 +16,14 @@ class CustomTextFieldWidget extends StatelessWidget {
     this.focusNode,
     this.placeholder,
     this.textCapitalization,
+    this.autofocus = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
+      autofocus: autofocus,
+      padding: const EdgeInsets.all(0),
       controller: controller,
       focusNode: focusNode,
       placeholder: placeholder,
