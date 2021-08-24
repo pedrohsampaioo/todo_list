@@ -34,6 +34,7 @@ dependencies:
   json_serializable: ^5.0.0
   json_annotation: ^4.1.0
   dartz: ^0.10.0
+  collection: ^1.15.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
