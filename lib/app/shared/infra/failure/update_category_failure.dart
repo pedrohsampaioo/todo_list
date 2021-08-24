@@ -1,0 +1,1 @@
+enum UpdateCategoryFailure { uncreatedCategory }
