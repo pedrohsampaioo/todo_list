@@ -6,6 +6,7 @@ part 'task_model.g.dart';
 @JsonSerializable()
 class TaskModel {
   final String id;
+  final String categoryId;
   final bool isCompleted;
   final String title;
   @JsonKey(fromJson: _fromJsonColor, toJson: _toJsonColor)
@@ -13,6 +14,7 @@ class TaskModel {
 
   const TaskModel({
     required this.id,
+    required this.categoryId,
     required this.isCompleted,
     required this.title,
     required this.categoryColor,
@@ -28,11 +30,13 @@ class TaskModel {
 
   TaskModel copyWith({
     String? id,
+    String? categoryId,
     bool? isCompleted,
     String? title,
     Color? categoryColor,
   }) {
     return TaskModel(
+      categoryId: categoryId ?? this.categoryId,
       id: id ?? this.id,
       isCompleted: isCompleted ?? this.isCompleted,
       title: title ?? this.title,

@@ -8,6 +8,7 @@ part of 'task_model.dart';
 
 TaskModel _$TaskModelFromJson(Map<String, dynamic> json) => TaskModel(
       id: json['id'] as String,
+      categoryId: json['categoryId'] as String,
       isCompleted: json['isCompleted'] as bool,
       title: json['title'] as String,
       categoryColor: TaskModel._fromJsonColor(
@@ -16,6 +17,7 @@ TaskModel _$TaskModelFromJson(Map<String, dynamic> json) => TaskModel(
 
 Map<String, dynamic> _$TaskModelToJson(TaskModel instance) => <String, dynamic>{
       'id': instance.id,
+      'categoryId': instance.categoryId,
       'isCompleted': instance.isCompleted,
       'title': instance.title,
       'categoryColor': TaskModel._toJsonColor(instance.categoryColor),

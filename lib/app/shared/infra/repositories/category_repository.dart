@@ -56,8 +56,8 @@ class CategoryRepository {
   }
 
   Stream<List<CategoryModel>> getAllCategoriesAsStream() => _store
-      .find(_database)
-      .asStream()
+      .query()
+      .onSnapshots(_database)
       .map<List<CategoryModel>>((records) => records
           .map<CategoryModel>((record) => CategoryModel.fromJson(record.value))
           .toList());

@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 
 import 'package:todo_list/app/config/categories/category_theme.dart';
+import 'package:todo_list/app/shared/infra/models/category_model.dart';
 
 class CategoryWidgeet extends StatelessWidget {
+  final CategoryModel? model;
+  final String id;
   final Color backgroundColor;
   final Color titleColor;
   final Color subtitleColor;
   final String title;
   final int tasksAmount;
-  final CategoryTheme variation;
+  final CategoryThemeVariations variation;
 
   const CategoryWidgeet({
     Key? key,
+    this.model,
+    required this.id,
     required this.backgroundColor,
     required this.variation,
     required this.titleColor,

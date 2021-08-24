@@ -4,18 +4,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:todo_list/app/config/theme/app_colors.dart';
 import 'package:todo_list/app/features/home/widgets/category_widget.dart';
+import 'package:todo_list/app/shared/infra/models/category_model.dart';
 import 'package:todo_list/app/shared/providers/notifiers.dart';
 import 'package:todo_list/app/shared/widgets/custom_text_field_widget.dart';
 import 'package:todo_list/app/config/categories/category_theme.dart';
 
-class CreateCategoryPage extends HookWidget {
-  const CreateCategoryPage({Key? key}) : super(key: key);
+class CreateTaskPage extends HookWidget {
+  final List<CategoryModel> categoriesToSelect;
+  const CreateTaskPage({
+    required this.categoriesToSelect,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final categoryNameController = useTextEditingController();
-    final selectedThemeValueNotifier =
-        useValueNotifier<CategoryThemeVariations?>(null);
+    final selectedThemeValueNotifier = useValueNotifier<CategoryModel?>(null);
     return Scaffold(
       backgroundColor: AppColors.white,
       body: GestureDetector(
@@ -72,7 +76,7 @@ class CreateCategoryPage extends HookWidget {
                   builder: (context, categoryName, _) {
                     return _buildSelectTheme(
                       context: context,
-                      categoryName: categoryName.text,
+                      categoriesToSelect: categoriesToSelect,
                       selectedThemeValueNotifier: selectedThemeValueNotifier,
                     );
                   },
@@ -94,13 +98,17 @@ class CreateCategoryPage extends HookWidget {
           child: categoryNameController.value.text.isNotEmpty &&
                   selectedThemeValueNotifier.value != null
               ? FloatingActionButton(
-                  heroTag: Key('add-category-page'),
-                  key: Key('add-category-page'),
+                  heroTag: Key('add-task-page'),
+                  key: Key('add-task-page'),
                   onPressed: () => context
                       .read(handleTodoListStateNotifierProvider.notifier)
-                      .createCategory(
+                      .createTask(
                         title: categoryNameController.value.text,
-                        categoryTheme: selectedThemeValueNotifier.value!,
+                        categoryColor: CategoryTheme.chooseVariation(
+                                selectedThemeValueNotifier.value!.categoryTheme)
+                            .backgroundColor,
+                        categoryId: selectedThemeValueNotifier.value!.id,
+                        isCompleted: false,
                       )
                       .whenComplete(() => Navigator.of(context).pop()),
                   child: Icon(
@@ -122,20 +130,21 @@ class CreateCategoryPage extends HookWidget {
 
   Widget _buildSelectTheme({
     required BuildContext context,
-    required String categoryName,
-    required ValueNotifier<CategoryThemeVariations?> selectedThemeValueNotifier,
+    required List<CategoryModel> categoriesToSelect,
+    required ValueNotifier<CategoryModel?> selectedThemeValueNotifier,
   }) {
-    final categories = CategoryThemeVariations.values.map<CategoryWidgeet>(
-      (categoryTheme) {
-        final variation = CategoryTheme.chooseVariation(categoryTheme);
+    final categories = categoriesToSelect.map<CategoryWidgeet>(
+      (category) {
+        final variation = CategoryTheme.chooseVariation(category.categoryTheme);
         return CategoryWidgeet(
-          id: '',
-          variation: categoryTheme,
+          model: category,
+          id: category.id,
+          variation: category.categoryTheme,
           backgroundColor: variation.backgroundColor,
           titleColor: variation.titleColor,
           subtitleColor: variation.subtitleColor,
-          title: categoryName,
-          tasksAmount: 0,
+          title: category.title,
+          tasksAmount: category.tasks.length,
         );
       },
     ).toList();
@@ -158,7 +167,16 @@ class CreateCategoryPage extends HookWidget {
           ),
         ),
         const SizedBox(height: 32),
-        ValueListenableBuilder<CategoryThemeVariations?>(
+        if (categories.isEmpty)
+          Text(
+            'No categories created yet',
+            textAlign: TextAlign.center,
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .apply(color: AppColors.black.withOpacity(0.5)),
+          ),
+        ValueListenableBuilder<CategoryModel?>(
           valueListenable: selectedThemeValueNotifier,
           builder: (context, variationSelected, _) {
             return MediaQuery.removePadding(
@@ -171,7 +189,7 @@ class CreateCategoryPage extends HookWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () => selectedThemeValueNotifier.value =
-                      categories[index].variation,
+                      categories[index].model,
                   child: Stack(
                     children: [
                       categories[index],
@@ -187,22 +205,21 @@ class CreateCategoryPage extends HookWidget {
                           ),
                           duration: const Duration(milliseconds: 300),
                           reverseDuration: const Duration(milliseconds: 300),
-                          child:
-                              variationSelected == categories[index].variation
-                                  ? Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Container(
-                                        height: 32,
-                                        width: 32,
-                                        child: Icon(Icons.check,
-                                            size: 24, color: Colors.black),
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    )
-                                  : const SizedBox.shrink(),
+                          child: variationSelected == categories[index].model
+                              ? Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
+                                    height: 32,
+                                    width: 32,
+                                    child: Icon(Icons.check,
+                                        size: 24, color: Colors.black),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
                         ),
                       ),
                     ],

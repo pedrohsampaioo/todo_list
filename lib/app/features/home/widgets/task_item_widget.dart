@@ -6,12 +6,17 @@ class TaskItemWidget extends StatelessWidget {
   final bool isCompleted;
   final String decription;
   final Color groupColor;
-
+  final VoidCallback onCheckTap;
+  final String id;
+  final String categoryId;
   const TaskItemWidget({
     Key? key,
     required this.isCompleted,
     required this.decription,
     required this.groupColor,
+    required this.onCheckTap,
+    required this.id,
+    required this.categoryId,
   }) : super(key: key);
 
   @override
@@ -21,7 +26,10 @@ class TaskItemWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       children: [
-        _buildCheck(isCompleted),
+        GestureDetector(
+          child: _buildCheck(isCompleted),
+          onTap: onCheckTap,
+        ),
         const SizedBox(width: 16),
         Expanded(
           child: Text(

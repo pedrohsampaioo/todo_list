@@ -42,7 +42,6 @@ class HandleTodoListStateNotifier extends StateNotifier<HandleTodoListState> {
   }
 
   Future<void> createCategory({
-    required String categoryId,
     required String title,
     required CategoryThemeVariations categoryTheme,
   }) async {

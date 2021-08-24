@@ -31,6 +31,7 @@ class TaskRepository {
     }
     final category = CategoryModel.fromJson(categoryJson);
     final taskToCreate = TaskModel(
+      categoryId: categoryId,
       title: title,
       categoryColor: categoryColor,
       isCompleted: isCompleted,
