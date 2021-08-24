@@ -8,7 +8,7 @@ import 'package:todo_list/app/config/database/database_keys.dart';
 abstract class DatabaseConfig {
   static Database? database;
   static Future<void> init() async {
-    if (database != null) {
+    if (database == null) {
       final dbName = DatabaseKeys.databaseName;
       final dir = await getApplicationDocumentsDirectory();
       await dir.create(recursive: true);
