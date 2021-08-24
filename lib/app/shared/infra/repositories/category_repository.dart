@@ -55,7 +55,10 @@ class CategoryRepository {
     await _store.record(id).delete(_database);
   }
 
-  Stream<CategoryModel> getAllCategoriesAsStream() =>
-      _store.stream(_database).map<CategoryModel>(
-          (recordSnapshot) => CategoryModel.fromJson(recordSnapshot.value));
+  Stream<List<CategoryModel>> getAllCategoriesAsStream() => _store
+      .find(_database)
+      .asStream()
+      .map<List<CategoryModel>>((records) => records
+          .map<CategoryModel>((record) => CategoryModel.fromJson(record.value))
+          .toList());
 }
