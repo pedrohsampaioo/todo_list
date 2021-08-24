@@ -9,6 +9,7 @@ part 'category_model.g.dart';
 class CategoryModel {
   final String id;
   final String title;
+  @JsonKey(toJson: _toJsonTasks)
   final List<TaskModel> tasks;
   final CategoryThemeVariations categoryTheme;
 
@@ -21,7 +22,11 @@ class CategoryModel {
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>
       _$CategoryModelFromJson(json);
+
   Map<String, dynamic> toJson() => _$CategoryModelToJson(this);
+
+  static List<Map<String, dynamic>> _toJsonTasks(List<TaskModel> tasks) =>
+      tasks.map<Map<String, dynamic>>((task) => task.toJson()).toList();
 
   CategoryModel copyWith({
     String? id,

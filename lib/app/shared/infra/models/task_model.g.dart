@@ -11,8 +11,7 @@ TaskModel _$TaskModelFromJson(Map<String, dynamic> json) => TaskModel(
       categoryId: json['categoryId'] as String,
       isCompleted: json['isCompleted'] as bool,
       title: json['title'] as String,
-      categoryColor: TaskModel._fromJsonColor(
-          json['categoryColor'] as Map<String, dynamic>),
+      categoryColor: TaskModel._fromJsonColor(json['categoryColor']),
     );
 
 Map<String, dynamic> _$TaskModelToJson(TaskModel instance) => <String, dynamic>{

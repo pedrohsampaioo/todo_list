@@ -122,7 +122,7 @@ class HomePage extends HookWidget {
                     .apply(color: AppColors.black),
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 16),
             if (tasksWidget.isEmpty)
               Text(
                 'No tasks created yet',
@@ -150,6 +150,7 @@ class HomePage extends HookWidget {
               itemCount: tasksWidget.length,
               shrinkWrap: true,
             ),
+            const SizedBox(height: 16),
           ],
         ),
       ),

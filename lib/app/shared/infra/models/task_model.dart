@@ -24,8 +24,8 @@ class TaskModel {
       _$TaskModelFromJson(json);
   Map<String, dynamic> toJson() => _$TaskModelToJson(this);
 
-  static Color _fromJsonColor(Map<String, dynamic> json) =>
-      Color(json['categoryColor'] as int);
+  static Color _fromJsonColor(dynamic categoryColor) =>
+      Color(categoryColor as int);
   static int _toJsonColor(Color categoryColor) => categoryColor.value;
 
   TaskModel copyWith({
